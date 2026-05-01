@@ -6,8 +6,9 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [uploaded, setUploaded] = useState(false)
   const [uploading, setUploading] = useState(false)
+  const [sessionId, setSessionId] = useState(null)
 
-  const uploadPDF = async (e) => {
+const uploadPDF = async (e) => {
     const file = e.target.files[0]
     if (!file) return
     
@@ -21,11 +22,11 @@ function App() {
     })
     
     const data = await response.json()
+    setSessionId(data.session_id)
     setUploaded(true)
     setUploading(false)
     setMessages([{ role: 'assistant', content: `PDF uploaded. ${data.message}. Ask me anything about it.` }])
-  }
-
+}
   const sendMessage = async () => {
     if (!input.trim() || !uploaded) return
     
@@ -38,13 +39,15 @@ function App() {
     const response = await fetch('http://127.0.0.1:8000/ask', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ question: input })
+      body: JSON.stringify({ question: input, session_id: sessionId })
     })
     
     const data = await response.json()
     setMessages([...updatedMessages, { role: 'assistant', content: data.answer }])
     setLoading(false)
   }
+
+  
 
   return (
     <div className="container">

@@ -1,9 +1,10 @@
 # PDF Chat UI
 
-React frontend for the PDF Chat app. Upload a PDF and ask questions about it in a chat interface.
+React frontend for the PDF Chat app. Upload a PDF and ask questions about it in a chat interface. Supports multiple PDFs via session management.
 
 ## Features
 - PDF upload with indexing status
+- Session-based PDF management
 - Chat interface with conversation history
 - Disabled input until PDF is uploaded
 - Clean responsive UI
